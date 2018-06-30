@@ -2,24 +2,8 @@
 #include <vector>
 using namespace std;
 
-// selection algorithm 
+// selection algorithm
 // http://blog.csdn.net/u010900754/article/details/55250442
-
-int findKthLargest(vector<int> &nums, int k) {
-	//sort(nums.begin(), nums.end(), greater<int>());
-	//return nums[k-1];
-	int low = 0, high = array.length - 1;  
-    while(low <= high){  
-        int m = partion(array, low, high);  
-        if(m == array.length - k)  
-            return array[m];  
-        else if(m > array.length - k)  
-            high = m - 1;  
-        else   
-            low = m + 1;  
-    }  
-    return -1;
-}
 
 int partion(vector<int> &nums, int beg, int end) {
 	int pivot = nums[beg];
@@ -34,6 +18,21 @@ int partion(vector<int> &nums, int beg, int end) {
 	return last;
 }
 
+int findKthLargest(vector<int> &nums, int k) {
+	//sort(nums.begin(), nums.end(), greater<int>());
+	//return nums[k-1];
+		int low = 0, high = nums.size() - 1;
+    while(low <= high){
+        int m = partion(nums, low, high);
+        if(m == nums.size() - k)
+            return nums[m];
+        else if(m > nums.size() - k)
+            high = m - 1;
+        else
+            low = m + 1;
+    }
+    return -1;
+}
 
 
 int main() {

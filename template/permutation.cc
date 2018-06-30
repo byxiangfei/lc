@@ -22,8 +22,7 @@ void permutation(vector<string>& res, vector<char> nums, int start) {
 
 }
 
-// abc acb bac bca cba cab 
-
+// abc acb bac bca cba cab
 
 int main() {
 	vector<string> res;
