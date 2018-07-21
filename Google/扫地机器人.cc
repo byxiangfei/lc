@@ -34,14 +34,11 @@ private:
     int x;
     int y;
     int N;
-    int d;  // direction
+    int d;  // direction 0：←， 1： 上 2：→，3：下， 
 
 public:
     bool move(int direction){
-        int x = direction - d;
-        if(x > 0) turnR(x);
-        else if(x < 0) turnL(-x);
-
+        turnL(direction - d);    // 这里由于 turnL 调用的 turnR 已经保证不会出负数了。
         int ret = move();
         if(ret) cout << "move:" << direction << endl;
         return ret;
@@ -76,21 +73,17 @@ public:
         y = ty;
         return true;
     }
-
-    void turnL(int k){
-        d -= k;
-        if(d < 0){
-            d = -d;
-            d = d % 4;
-            d = 4 - d;
-        }
-    }
-
+    
+    // k 必须是个非负数
     void turnR(int k){
         d += k;
         d = d % 4;
     }
-
+    
+    void turnL(int k){
+        turnR(4 - k % 4);   // 向左转3 == 像右转1
+    }
+    
     void clean(){
         cout << "clean:" << x << ":" << y << endl;
     }
@@ -129,7 +122,7 @@ public:
             if(vis.find(tx * N + ty) != vis.end()) continue;
             if(move(i)) {
                 help(vis);
-                move(back[i]);
+                move(back[i]);   //扫地之精华，就是在每个方向，前进了，还要后退！ 
             }
         }
     }
