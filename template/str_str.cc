@@ -39,7 +39,7 @@ int strStr(string haystack, string needle) {
 	return -1;
 }
 int main() {
-	//cout<<strStr("hello", "ll")<<endl;
+	cout<<strStr("hello", "hell")<<endl;
 	vector<int> arr = nex("abaaabab");
 	for(auto a: arr) {
 		cout<<a<<" ";
