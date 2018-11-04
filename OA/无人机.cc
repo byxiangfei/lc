@@ -39,15 +39,20 @@ vector<pair<int,int>> findPair2(vector<pair<int,int>> go, vector<pair<int,int>> 
     }
     cout<<"debug:"<<minDiff<<endl;
     //然后 twosum
-    map<int,int> m;
+    map<int,vector<int>> m;  //会有重复
     for(auto g: go) {
-        m[target - g.second] = g.first;
+        //if (target < g.second) continue;
+        m[abs(target - g.second - minDiff)].push_back(g.first);  // 如果是有小于限制，就不行
+
     }
     for(auto b: back) {
         if(m.count(b.second)) {
-            res.emplace_back(m[b.second], b.first);
+            for(auto gid: m[b.second]) {
+                res.emplace_back(gid, b.first);
+            }
         }
     }
+
     return res;
 }
 
@@ -65,7 +70,8 @@ int findClosestPair(vector<pair<int,int>> &back, int target) {
             end = mid - 1;
         }
     }
-    //cout<<"find target:"<<target<<" return idx:"<<beg<<" idxvalue:"<<back[beg].second<<endl;
+    if(beg == back.size()) return beg-1;
+    cout<<"find target:"<<target<<" return idx:"<<beg<<" idxvalue:"<<back[beg].second<<endl;
     return beg;
 }
 
@@ -88,8 +94,8 @@ vector<pair<int,int>> findPair(vector<pair<int,int>> go, vector<pair<int,int>> b
 }
 
 int main() {
-    vector<pair<int,int>> go = {{1, 1000},{2, 7000},{3, 12000}};
-    vector<pair<int,int>> back = {{1, 10000},{2, 9000},{3, 3000},{4, 2000}};
+    vector<pair<int,int>> go = {{1, 1000},{2, 1000},{3, 12000}};
+    vector<pair<int,int>> back = {{1, 9000},{2, 9000},{3, 3000},{4, 2000}};
     auto res = findPair2(go,back, 12000);
 
     for(auto r : res){
