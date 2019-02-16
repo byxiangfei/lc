@@ -15,6 +15,7 @@ public:
     int val;
 
 };
+
 //if return is void,* should be *&
 Node* insertNode(Node *root, int val) {
     if(root == nullptr) {

@@ -19,7 +19,7 @@ void helper_dfs(vector<vector<char>>& grid, int i, int j) {
     grid[i][j] = '0';
     int dir[5] = {-1,0,1,0,-1};
     for(int d = 0; d < 4; d++)
-        helper(grid, i + dir[d], j + dir[d+1]);
+        helper_dfs(grid, i + dir[d], j + dir[d+1]);
     return;
 }
 

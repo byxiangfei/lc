@@ -34,11 +34,17 @@ private:
     int x;
     int y;
     int N;
-    int d;  // direction 0：←， 1： 上 2：→，3：下， 
+    int d;  // direction 0：←， 1： 下 2：→，3：上，
 
 public:
+    // direction  relative direction
     bool move(int direction){
-        turnL(direction - d);    // 这里由于 turnL 调用的 turnR 已经保证不会出负数了。
+        int x = direction - d;
+        if(x > 0){
+            turnR(x);
+        } else if(x < 0){
+            turnL(-x);
+        }
         int ret = move();
         if(ret) cout << "move:" << direction << endl;
         return ret;
@@ -47,6 +53,7 @@ public:
     bool move(){
         int dx = 0;
         int dy = 0;
+
         switch(d){
             case 0:
                 dx--;
@@ -65,25 +72,26 @@ public:
         }
         int tx = x + dx;
         int ty = y + dy;
+
         if( tx >= N || tx < 0 || ty >= N || ty < 0){
             return false;
         }
+
         if(data[tx][ty]) return false;
         x = tx;
         y = ty;
         return true;
     }
-    
+
     // k 必须是个非负数
     void turnR(int k){
         d += k;
         d = d % 4;
     }
-    
     void turnL(int k){
         turnR(4 - k % 4);   // 向左转3 == 像右转1
     }
-    
+
     void clean(){
         cout << "clean:" << x << ":" << y << endl;
     }
@@ -110,19 +118,18 @@ public:
         if(vis.find(x * N + y) != vis.end()) return;
         clean();
         vis.insert(x * N + y);
+
         int back[4] = {2, 3, 0, 1};
 
         int dx[4] = {-1, 0, 1, 0};
         int dy[4] = {0, 1, 0, -1};
 
-        for(int i = 0; i < 4; i ++){
-            int tx = x + dx[i];
-            int ty = y + dy[i];
-            if( tx >= N || tx < 0 || ty >= N || ty < 0)continue;
-            if(vis.find(tx * N + ty) != vis.end()) continue;
+        for (int i = 0; i < 4; i ++) {
+            int tx = x + dx[i], ty = y + dy[i];
+            if( tx >= N || tx < 0 || ty >= N || ty < 0 || vis.count(tx * N + ty)) continue;
             if(move(i)) {
                 help(vis);
-                move(back[i]);   //扫地之精华，就是在每个方向，前进了，还要后退！ 
+                move(back[i]);   //扫地之精华，就是在每个方向，前进了，还要后退！
             }
         }
     }
