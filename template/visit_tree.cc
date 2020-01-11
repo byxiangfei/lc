@@ -19,6 +19,7 @@ TreeNode* buildTree() {
 	TreeNode* root = new TreeNode(1);
 	root->left = new TreeNode(2);
 	root->right = new TreeNode(3);
+	root->right->right = new TreeNode(4);
 	return root;
 }
 
@@ -44,6 +45,47 @@ void PreOrderIteration(TreeNode* root) {
 }
 
 // left, root, right
+void pushLeft(stack<TreeNode*> &s, TreeNode* n) {
+	while(n != nullptr) {
+		s.push(n);
+		n = n->left;
+	}
+}
+
+void MidOrderIteration_0(TreeNode* root) {
+	if(!root) return;
+	stack<TreeNode*> s;
+	pushLeft(s, root);
+	while(!s.empty()) {
+		auto cur = s.top(); s.pop();
+		cout<<cur->val<<" ";
+		pushLeft(s, cur->right);
+	}
+	cout<<endl;
+	return;
+}
+
+void PostOrderIteration_0(TreeNode* root) {
+	if(!root) return;
+	stack<TreeNode*> s;
+	pushLeft(s, root);
+	TreeNode* pre = NULL;
+	while(!s.empty()) {
+		TreeNode* top = s.top();   // must have a new one
+		//当right没有，或者right已经visit过了，才visit top
+		if (top->right != nullptr && top->right != pre) {
+			pushLeft(s, top->right);
+			continue;
+		}
+		s.pop();
+		cout<<top->val<<" ";
+		pre = top;
+	}
+	cout<<endl;
+	return;
+}
+
+
 void MidOrderIteration(TreeNode* root) {
 	if(!root) return;
 	stack<TreeNode*> s;
@@ -94,7 +136,7 @@ void PostOrderIteration(TreeNode* root) {
 int main() {
 	TreeNode* root = buildTree();
 	cout<<"pre  order: "; PreOrderIteration(root);
-	cout<<"mid  order: "; MidOrderIteration(root);
-	cout<<"post order: "; PostOrderIteration(root);
+	cout<<"mid  order: "; MidOrderIteration_0(root);
+	cout<<"post order: "; PostOrderIteration_0(root);
 	return 0;
 }
