@@ -34,7 +34,6 @@ int findKthLargest(vector<int> &nums, int k) {
     return -1;
 }
 
-
 int main() {
 	vector<int> nums = {4,1,2};
 	findKthLargest(nums, 1);
