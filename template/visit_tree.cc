@@ -7,8 +7,10 @@ using namespace std;
 
 class TreeNode {
 public:
-	TreeNode* left, *right;
 	int val;
+
+	TreeNode* left, *right;
+
 	TreeNode(int v): val(v), left(NULL), right(NULL) {};
 };
 
@@ -41,7 +43,7 @@ void PreOrderIteration(TreeNode* root) {
 	return;
 }
 
-// left, root, right 
+// left, root, right
 void MidOrderIteration(TreeNode* root) {
 	if(!root) return;
 	stack<TreeNode*> s;
@@ -62,7 +64,7 @@ void MidOrderIteration(TreeNode* root) {
 }
 
 // left, right, root,  o(n) time & space
-// 需要一个pre记录是否visit过 
+// 需要一个pre记录是否visit过
 void PostOrderIteration(TreeNode* root) {
 	if(!root) return;
 	stack<TreeNode*> s;
@@ -72,12 +74,11 @@ void PostOrderIteration(TreeNode* root) {
 		if(cur) {
 			s.push(cur);
 			cur = cur->left;
-		} 
-		else {
+		} else {
 			TreeNode* top = s.top();   // must have a new one
 			//当right没有，或者right已经visit过了，才visit top
 			if(top->right == NULL || top->right == pre) {
-				s.pop(); 
+				s.pop();
 				cout<<top->val<<" ";
 				pre = top;
 			} else {

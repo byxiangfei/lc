@@ -7,7 +7,7 @@ public:
             for (int j = 0; j < n; ++j) {
                 if (forest[i][j] > 1) trees.push_back({forest[i][j], i, j});
             }
-        }
+         }
         sort(trees.begin(), trees.end());
         for (int i = 0; i < trees.size(); ++i) {
             int cnt = helper(forest, row, col, trees[i][1], trees[i][2]);
@@ -39,4 +39,4 @@ public:
         }
         return -1;
     }
-}; 
+};
