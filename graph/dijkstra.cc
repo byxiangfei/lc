@@ -6,7 +6,9 @@ using namespace std;
 const int INF = 1e9; // int范围约为 (-2.15e9, 2.15e9)
 
 /*Dijkstra算法解决的是单源最短路径问题，即给定图G(V,E)和起点s(起点又称为源点),边的权值为非负，
-求从起点s到达其它顶点的最短距离，并将最短距离存储在矩阵d中*/
+求从起点s到达其它顶点的最短距离，并将最短距离存储在矩阵d中
+o(n^3)
+*/
 void Dijkstra(int n, int s, vector<vector<int>> G, vector<bool> &vis, vector<int> &d,
               vector<int> &pre) {
     /*
@@ -25,7 +27,6 @@ void Dijkstra(int n, int s, vector<vector<int>> G, vector<bool> &vis, vector<int
     for (int i = 0; i < n; ++i) {
         pre[ i ] = i;
     }
-
     // n次循环,确定d[n]数组
     for (int i = 0; i < n; ++i) {
         // 找到距离s最近的点u,和最短距离d[u]
@@ -37,12 +38,10 @@ void Dijkstra(int n, int s, vector<vector<int>> G, vector<bool> &vis, vector<int
                 MIN = d[ j ];
             }
         }
-
         // 找不到小于INF的d[u],说明剩下的顶点与起点s不连通
         if (u == -1) {
             return;
         }
-
         vis[ u ] = true;
         for (int v = 0; v < n; ++v) {
             // 遍历所有顶点，如果v未被访问 && 可以达到v && 以u为中介点使d[v]更小
@@ -62,6 +61,53 @@ void DFSPrint(int s, int v, vector<int> pre) {
     }
     DFSPrint(s, pre[ v ], pre);
     cout << v << " ";
+}
+
+typedef pair<int, int> ii;
+vector<vector<ii>>     a;
+vector<int>            d;
+vector<int>            pre;
+
+// https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-priority_queue-stl/
+void dijkstra(int s, int n) {
+    d.resize(n, INT_MAX);
+    pre.resize(n, -1);
+    d[ s ] = 0;
+    priority_queue<ii, vector<ii>, greater<ii>> Q;
+    Q.push({d[ s ], s});
+    while (!Q.empty()) {
+        auto [ dd, u ] = Q.top();
+        Q.pop();
+        if (dd != d[ u ])
+            continue;
+        for (auto &[ v, w ] : a[ u ]) {
+            if (d[ v ] > d[ u ] + w) {
+                d[ v ]   = d[ u ] + w;
+                pre[ v ] = u;
+                Q.push({d[ v ], v});
+            }
+        }
+    }
+}
+
+string happy(int n, vector<vector<int>> &roads, vector<string> &codes) {
+    a.resize(n);
+    for (auto &road : roads) {
+        int u = road[ 0 ], v = road[ 1 ], w = road[ 2 ];
+        a[ u ].emplace_back(v, w);
+        a[ v ].emplace_back(u, w);
+    }
+    int s = 11, t = 0;
+    dijkstra(s, t, n);
+    vector<string> cities;
+    for (int u = t; u != -1; u = pre[ u ]) {
+        cities.emplace_back(codes[ u ]);
+    }
+    reverse(cities.begin(), cities.end());
+    string ret;
+    for (auto &it : cities)
+        ret += it;
+    return ret;
 }
 
 int main() {
