@@ -9,6 +9,7 @@ const int INF = 1e9; // int范围约为 (-2.15e9, 2.15e9)
 求从起点s到达其它顶点的最短距离，并将最短距离存储在矩阵d中
 o(n^3)
 */
+
 void Dijkstra(int n, int s, vector<vector<int>> G, vector<bool> &vis, vector<int> &d,
               vector<int> &pre) {
     /*
