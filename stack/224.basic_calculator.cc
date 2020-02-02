@@ -1,45 +1,56 @@
 // basic calculator
-#include <string>
 #include <iostream>
 #include <stack>
+#include <string>
 
 using namespace std;
 
-int calc(string str) {
-	stack<int> s;
-	int res = 0; 
-	int flag = 1;
-	for(int i = 0; i < str.size(); i++) {
-		int num = 0;
-		while(isdigit(str[i])) {
-			num = num * 10 + (str[i] - '0');
-			i++;
-		}
-		res += flag * num;
-		switch(str[i]) {
-			case '+': 
-				flag = 1; 
-				break;
-			case '-': 
-				flag = -1; 
-				break;
-			case '(':
-				s.push(res); res = 0;
-				s.push(flag); flag = 1;
-				break;
-			case ')':
-				res *= s.top(); s.pop();
-				res += s.top(); s.pop();
-				break;
-			default: break;
-		} 
-	}
-	return res;
+int calculate(string s) {
+    int  n = s.size(), num = 0, curRes = 0, res = 0;
+    char op = '+';
+    for (int i = 0; i < n; ++i) {
+        char c = s[ i ];
+        if (c >= '0' && c <= '9') {
+            num = num * 10 + c - '0';
+        } else if (c == '(') {
+            int j = i, cnt = 0;
+            for (; i < n; ++i) {
+                if (s[ i ] == '(')
+                    ++cnt;
+                if (s[ i ] == ')')
+                    --cnt;
+                if (cnt == 0)
+                    break;
+            }
+            num = calculate(s.substr(j + 1, i - j - 1));
+        }
+        if (c == '+' || c == '-' || c == '*' || c == '/' || i == n - 1) {
+            switch (op) {
+                case '+':
+                    curRes += num;
+                    break;
+                case '-':
+                    curRes -= num;
+                    break;
+                case '*':
+                    curRes *= num;
+                    break;
+                case '/':
+                    curRes /= num;
+                    break;
+            }
+            if (c == '+' || c == '-' || i == n - 1) {
+                res += curRes;
+                curRes = 0;
+            }
+            op  = c;
+            num = 0;
+        }
+    }
+    return res;
 }
 
 int main() {
-	cout<<calc("12 + (2 - ( 3 - 4))")<<endl;
-	return 0;
-
-
+    cout << calculate("12 + (2 - ( 3 - 4))") << endl;
+    return 0;
 }
