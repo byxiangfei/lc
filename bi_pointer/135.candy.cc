@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <stack>
+#include <vector>
 using namespace std;
 /*
 There are N children standing in a line. Each child is assigned a rating value.
@@ -16,15 +16,17 @@ What is the minimum candies you must give?
 int candy(vector<int> arr) {
     vector<int> c(arr.size(), 1);
 
-    for(int i = 1; i < arr.size(); i++) {
-        if(arr[i] > arr[i-1]) c[i] = c[i-1] + 1;
+    for (int i = 1; i < arr.size(); i++) {
+        if (arr[i] > arr[i - 1])
+            c[i] = c[i - 1] + 1;
     }
-    for(int i = arr.size() - 1; i > 0; i--) {
-        if(arr[i-1] > arr[i]) c[i-1] = max(c[i-1], c[i]+1);
+    for (int i = arr.size() - 1; i > 0; i--) {
+        if (arr[i - 1] > arr[i])
+            c[i - 1] = max(c[i - 1], c[i] + 1);
     }
     int res = 0;
-    for(auto x: c) {
-        res+=x;
+    for (auto x : c) {
+        res += x;
     }
     return res;
 }

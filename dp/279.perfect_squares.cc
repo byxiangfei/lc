@@ -14,7 +14,7 @@ int numSquares(int n) {
   return dp.back();
 }
 
-int main() {
+ int main() {
   cout << numSquares(4) << endl;
   return 0;
 }

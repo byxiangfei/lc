@@ -5,9 +5,9 @@ AccessModifierOffset: -4
 # 括号之后,水平对齐参数: Align DontAlign AlwaysBreak
 AlignAfterOpenBracket: Align
 # 连续的赋值时,对齐所有的等号
-AlignConsecutiveAssignments: true
+AlignConsecutiveAssignments: false
 # 连续声明时，对齐所有声明的变量名
-AlignConsecutiveDeclarations: true
+AlignConsecutiveDeclarations: false
 # 左对齐换行(使用反斜杠换行)的反斜杠
 AlignEscapedNewlinesLeft: true
 # 水平对齐二元和三元表达式的操作数
@@ -49,7 +49,7 @@ AllowShortFunctionsOnASingleLine: false
 # 换行的时候对齐操作符
 #AlignOperands: true
 # 中括号两边空格 []
-SpacesInSquareBrackets: true
+SpacesInSquareBrackets: false
 # 小括号两边添加空格
 SpacesInParentheses : false
 #等号两边的空格

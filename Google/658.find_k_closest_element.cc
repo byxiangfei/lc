@@ -9,7 +9,7 @@ int findK(vector<int> arr, int k, int c) {
         if(k - arr[mid] <= arr[mid+c] - k) e = mid - 1;
         else s = mid+1;
     }
-    return s;
+      return s;
 }
 
 int main() {
