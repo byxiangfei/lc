@@ -1,24 +1,33 @@
+#include <algorithm>
+#include <cmath>
 #include <iostream>
-#include <vector>
+#include <map>
+#include <queue>
+#include <set>
+#include <sstream> //istringstream 必须包含这个头文件
+#include <stack>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
-#include <queue>
-#include <stack>
-#include <cmath>
-#include <map>
-#include <set>
-#include <algorithm>
-#include <sstream>    //istringstream 必须包含这个头文件
-
+#include <vector>
 
 using namespace std;
 
 class TreeNode {
 public:
     int val;
-    TreeNode* left;
-    TreeNode* right;
+    TreeNode *left;
+    TreeNode *right;
 
-    TreeNode(int x): val(x), left(NULL), right(NULL) {}
+    TreeNode(int x)
+        : val(x)
+        , left(NULL)
+        , right(NULL) {
+    }
 };
+
+void printVector(vector<int> t) {
+    for (auto x : t)
+        cout << x << " ";
+    cout << endl;
+}
